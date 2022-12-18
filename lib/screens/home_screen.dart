@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:card_swiper/card_swiper.dart';
+import '../widgets/discount_banner_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,8 +11,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -64,15 +68,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(12.0),
                   ),
-                  borderSide: BorderSide(
+                  borderSide: BorderSide(width: 2.5,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
               ),
               onChanged: (value) {},
+            ),
+            const SizedBox(
+              height: 12.0,
+            ),
+            SizedBox(
+              height: screenSize.height * 0.25,
+              width: double.infinity,
+
+              child: Swiper(
+                itemCount: 3,
+                itemBuilder: (context, index) => const DiscountBanner(),
+                autoplay: true,
+                pagination: const SwiperPagination(
+                    alignment: Alignment.bottomCenter,
+                    builder: DotSwiperPaginationBuilder(
+                      color: Colors.white,
+                      activeColor: Colors.red,
+                    )),
+              ),
             ),
           ],
         ),
