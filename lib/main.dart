@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'consts/global_colors.dart';
 import 'screens/home_screen.dart';
 
 void main() {
+  //?these line code are used to lock the screen orientation
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    //?u could add some device orientation(bcs it's a list)
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+  //? end of "locker rotation screen"
   runApp(const MyApp());
 }
 
