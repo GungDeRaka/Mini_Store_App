@@ -105,15 +105,20 @@ class _HomeScreenState extends State<HomeScreen> {
             InkWell(
               hoverColor: Theme.of(context).scaffoldBackgroundColor,
               onTap: () {
-                Navigator.push(context,  PageTransition(type: PageTransitionType.fade, child: const FeedsScreen(), childCurrent: const HomeScreen()));
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        child: const FeedsScreen(),
+                        childCurrent: const HomeScreen()));
               },
               child: Row(
-                
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
                   Text(
                     "Latest Product",
-                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
                   Icon(
                     IconlyBold.arrowRight2,
@@ -123,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(
-            height: 20.0,
+              height: 20.0,
             ),
             GridView.builder(
               shrinkWrap: true,

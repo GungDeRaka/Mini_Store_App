@@ -1,6 +1,8 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:store_api_flutter_course/screens/detail_products.dart';
 
 import '../consts/global_colors.dart';
 
@@ -18,7 +20,14 @@ class ProductFeeds extends StatelessWidget {
         ),
         color: Theme.of(context).cardColor,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.size,
+                    alignment: Alignment.bottomCenter,
+                    child: const DetailProducts()));
+          },
           borderRadius: const BorderRadius.all(
             Radius.circular(12.0),
           ),
@@ -64,26 +73,26 @@ class ProductFeeds extends StatelessWidget {
                   height: size.height * 0.2,
                   width: double.infinity,
                   errorWidget: const Icon(
-                  IconlyBold.danger,
-                  color: Colors.red,
-                  size: 28.0,
+                    IconlyBold.danger,
+                    color: Colors.red,
+                    size: 28.0,
                   ),
                 ),
               ),
               const SizedBox(
-              height: 10.0,
+                height: 10.0,
               ),
-              const Padding(padding: EdgeInsets.all(8),
-              child: Text("Title",
-              overflow: TextOverflow.fade,
-              maxLines: 2,
-              style: TextStyle(
-              fontSize: 12.0,
-              fontWeight: FontWeight.w700
+              const Padding(
+                padding: EdgeInsets.all(8),
+                child: Text(
+                  "Title",
+                  overflow: TextOverflow.fade,
+                  maxLines: 2,
+                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w700),
+                ),
               ),
-              ),),
               SizedBox(
-                height: size.height*0.02,
+                height: size.height * 0.02,
               )
             ],
           ),
