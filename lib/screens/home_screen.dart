@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:store_api_flutter_course/screens/category_screen.dart';
-import 'package:store_api_flutter_course/screens/feeds_screen.dart';
-import 'package:store_api_flutter_course/widgets/product_feeds.dart';
+import '../screens/category_screen.dart';
+import '../screens/feeds_screen.dart';
+import '../screens/user_screen.dart';
+import '../widgets/product_feeds.dart';
 import '../widgets/discount_banner_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -43,7 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               splashColor: IconTheme.of(context).color,
               hoverColor: Theme.of(context).scaffoldBackgroundColor,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: const UserScreen(),
+                        type: PageTransitionType.fade));
+              },
               icon: const Icon(
                 IconlyBold.user3,
               ),
