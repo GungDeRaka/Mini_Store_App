@@ -63,19 +63,22 @@ class ProductFeeds extends StatelessWidget {
               const SizedBox(
                 height: 10.0,
               ),
-              ClipRRect(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(12.0),
-                ),
-                child: FancyShimmerImage(
-                  imageUrl: "https://i.ibb.co/vwB46Yq/shoes.png",
-                  boxFit: BoxFit.fill,
-                  height: size.height * 0.2,
-                  width: double.infinity,
-                  errorWidget: const Icon(
-                    IconlyBold.danger,
-                    color: Colors.red,
-                    size: 28.0,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(12.0),
+                  ),
+                  child: FancyShimmerImage(
+                    imageUrl: "https://i.ibb.co/vwB46Yq/shoes.png",
+                    boxFit: BoxFit.fill,
+                    height: size.height * 0.2,
+                    width: double.infinity,
+                    errorWidget: const Icon(
+                      IconlyBold.danger,
+                      color: Colors.red,
+                      size: 28.0,
+                    ),
                   ),
                 ),
               ),
@@ -91,9 +94,9 @@ class ProductFeeds extends StatelessWidget {
                   style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w700),
                 ),
               ),
-              SizedBox(
-                height: size.height * 0.02,
-              )
+              // SizedBox(
+              //   height: size.height * 0.02,
+              // )
             ],
           ),
         ),

@@ -32,10 +32,10 @@ class DiscountBanner extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 height: double.infinity,
-                decoration:const BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 106, 74, 158),
-                  borderRadius:BorderRadius.all(
-                  Radius.circular(12.0),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(12.0),
                   ),
                 ),
                 child: Padding(
@@ -44,10 +44,15 @@ class DiscountBanner extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    Text("Get the special discount",style:TextStyle(color: Colors.white,fontSize: 12),),
-                    SizedBox(height: 6,),
-                    Flexible(
+                    children: const [
+                      Text(
+                        "Get the special discount",
+                        style: TextStyle(color: Colors.white, fontSize: 12),
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Flexible(
                         child: SizedBox(
                           width: double.infinity,
                           child: FittedBox(
@@ -63,21 +68,22 @@ class DiscountBanner extends StatelessWidget {
                           ),
                         ),
                       ),
-                  ],
+                    ],
                   ),
                 ),
               ),
             ),
           ),
-           Flexible(
+          Flexible(
             flex: 3,
             child: Padding(
               padding: const EdgeInsets.all(14.0),
               child: Image.network(
-                  width: double.infinity,
-                  // height: double.infinity,
-                  "https://i.ibb.co/vwB46Yq/shoes.png",
-                  fit: BoxFit.contain,),
+                width: double.infinity,
+                // height: double.infinity,
+                "https://i.ibb.co/vwB46Yq/shoes.png",
+                fit: BoxFit.contain,
+              ),
             ),
           ),
         ],

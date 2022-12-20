@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:store_api_flutter_course/screens/category_screen.dart';
 import 'package:store_api_flutter_course/screens/feeds_screen.dart';
 import 'package:store_api_flutter_course/widgets/product_feeds.dart';
 import '../widgets/discount_banner_widget.dart';
@@ -26,7 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
           leading: IconButton(
             splashColor: IconTheme.of(context).color,
             hoverColor: Theme.of(context).scaffoldBackgroundColor,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      child: const CategoryScreen(),
+                      type: PageTransitionType.fade));
+            },
             icon: const Icon(IconlyBold.category),
           ),
           title: const Text(
@@ -138,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 0.0,
                 mainAxisSpacing: 0.0,
-                childAspectRatio: 0.74,
+                childAspectRatio: 0.8,
               ),
               itemBuilder: (BuildContext context, int index) {
                 return const ProductFeeds();

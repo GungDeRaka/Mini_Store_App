@@ -64,7 +64,14 @@ class DetailProducts extends StatelessWidget {
             width: double.infinity,
             child: Swiper(
               itemCount: 3,
-              itemBuilder: (context, index) => const DiscountBanner(),
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Image.network(
+                    width: double.infinity,
+                    // height: double.infinity,
+                    "https://i.ibb.co/vwB46Yq/shoes.png",
+                    fit: BoxFit.contain,),
+              ),
               autoplay: true,
               pagination: const SwiperPagination(
                   alignment: Alignment.bottomCenter,
