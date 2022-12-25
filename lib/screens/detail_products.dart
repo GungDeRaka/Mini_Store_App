@@ -1,12 +1,31 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:card_swiper/card_swiper.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+
+import 'package:store_api_flutter_course/models/products_model.dart';
+import 'package:store_api_flutter_course/services/api_handler.dart';
+
 import '../constants/global_colors.dart';
 
+class DetailProducts extends StatefulWidget {
+  const DetailProducts({
+    Key? key,
+  }) : super(key: key);
 
-class DetailProducts extends StatelessWidget {
-  const DetailProducts({super.key});
+  @override
+  State<DetailProducts> createState() => _DetailProductsState();
+}
+
+class _DetailProductsState extends State<DetailProducts> {
+  List<ProductsModel> productList = [];
+
+  @override
+  void didChangeDependencies() async {
+    productList = await APIHandler.getAllData();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +87,16 @@ class DetailProducts extends StatelessWidget {
               itemBuilder: (context, index) => Padding(
                 padding: EdgeInsets.all(14.0),
                 child: FancyShimmerImage(
-      imageUrl:  "https://i.ibb.co/vwB46Yq/shoes.png",
-      boxFit: BoxFit.fill,
-      height: screenSize.height * 0.2,
-      width: double.infinity,
-      errorWidget: const Icon(
-        IconlyBold.danger,
-        color: Colors.red,
-        size: 28.0,
-      ),
-    ),
+                  imageUrl: "https://i.ibb.co/vwB46Yq/shoes.png",
+                  boxFit: BoxFit.fill,
+                  height: screenSize.height * 0.2,
+                  width: double.infinity,
+                  errorWidget: const Icon(
+                    IconlyBold.danger,
+                    color: Colors.red,
+                    size: 28.0,
+                  ),
+                ),
               ),
               autoplay: true,
               pagination: const SwiperPagination(

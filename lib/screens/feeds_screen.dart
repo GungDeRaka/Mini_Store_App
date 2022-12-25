@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../models/products_model.dart';
 import '../services/api_handler.dart';
 import '../widgets/product_feeds.dart';
 
 class FeedsScreen extends StatefulWidget {
-  FeedsScreen({super.key});
+  const FeedsScreen({super.key});
 
   @override
   State<FeedsScreen> createState() => _FeedsScreenState();
@@ -21,14 +21,14 @@ class _FeedsScreenState extends State<FeedsScreen> {
 
   @override
   void initState() {
-    getProduct();
+  
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    super.didChangeDependencies();
     getProduct();
+    super.didChangeDependencies();
   }
 
   @override
@@ -39,23 +39,25 @@ class _FeedsScreenState extends State<FeedsScreen> {
         title: const Text("All Product"),
         actions: const [],
       ),
-      body: GridView.builder(
-        itemCount: productList.length,
-        // shrinkWrap: true,
-        // physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 0.0,
-          mainAxisSpacing: 0.0,
-          childAspectRatio: 0.8,
-        ),
-        itemBuilder: (BuildContext context, int index) {
-          return ProductFeeds(
-            imageUrl: productList[index].images![0],
-            title: productList[index].title.toString(),
-          );
-        },
-      ),
+      body: productList.isEmpty
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : GridView.builder(
+              itemCount: productList.length,
+              // shrinkWrap: true,
+              // physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 0.0,
+                mainAxisSpacing: 0.0,
+                childAspectRatio: 0.8,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return ChangeNotifierProvider.value(
+                    value: productList[index], child: const ProductFeeds());
+              },
+            ),
     );
   }
 }

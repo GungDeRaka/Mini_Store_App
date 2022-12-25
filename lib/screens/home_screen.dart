@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:store_api_flutter_course/models/products_model.dart';
 import '../screens/category_screen.dart';
 import '../screens/feeds_screen.dart';
@@ -46,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    APIHandler.getAllData();
+    
     Size screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
@@ -174,23 +175,31 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 20.0,
             ),
-            GridView.builder(
-              shrinkWrap: true,
-              itemCount: productList.length,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 0.0,
-                mainAxisSpacing: 0.0,
-                childAspectRatio: 0.8,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return ProductFeeds(
-                  imageUrl: productList[index].images![0],
-                  title: productList[index].title.toString(),
-                );
-              },
-            ),
+            FutureBuilder<List<ProductsModel>>(
+                future: APIHandler.getAllData(),
+                builder: (context, snapshot) {
+                  return (snapshot.connectionState == ConnectionState.waiting)
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : GridView.builder(
+                        itemCount: productList.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 0.0,
+                            mainAxisSpacing: 0.0,
+                            childAspectRatio: 0.8,
+                          ),
+                          itemBuilder: (BuildContext context, int index) {
+                            return ChangeNotifierProvider.value(
+                              value: productList[index],
+                              child: const ProductFeeds());
+                          },
+                        );
+                }),
           ],
         ),
       ),

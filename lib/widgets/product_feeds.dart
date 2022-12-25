@@ -3,23 +3,22 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+import 'package:store_api_flutter_course/models/products_model.dart';
 
 import 'package:store_api_flutter_course/screens/detail_products.dart';
 
 import '../constants/global_colors.dart';
 
 class ProductFeeds extends StatelessWidget {
-
-  final String title;
-  final String imageUrl;
+  
   const ProductFeeds({
     Key? key,
-    required this.title,
-    required this.imageUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ProductsModel modelProvider = Provider.of<ProductsModel>(context);
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(4.0),
@@ -58,7 +57,7 @@ class ProductFeeds extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                              text: "168.00",
+                              text: "${modelProvider.price}",
                               style: TextStyle(
                                   color: lightTextColor,
                                   fontWeight: FontWeight.w600)),
@@ -79,7 +78,7 @@ class ProductFeeds extends StatelessWidget {
                     Radius.circular(12.0),
                   ),
                   child: FancyShimmerImage(
-                    imageUrl: imageUrl,
+                    imageUrl: modelProvider.images![1],
                     boxFit: BoxFit.fill,
                     height: size.height * 0.2,
                     width: double.infinity,
@@ -94,10 +93,10 @@ class ProductFeeds extends StatelessWidget {
               const SizedBox(
                 height: 10.0,
               ),
-               Padding(
+              Padding(
                 padding: EdgeInsets.all(8),
                 child: Text(
-                  title,
+                  modelProvider.title.toString(),
                   overflow: TextOverflow.fade,
                   maxLines: 2,
                   style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w700),
