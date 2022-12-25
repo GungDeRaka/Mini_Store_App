@@ -1,8 +1,9 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
+import '../constants/global_colors.dart';
 
-import '../consts/global_colors.dart';
-import '../widgets/discount_banner_widget.dart';
 
 class DetailProducts extends StatelessWidget {
   const DetailProducts({super.key});
@@ -65,12 +66,18 @@ class DetailProducts extends StatelessWidget {
             child: Swiper(
               itemCount: 3,
               itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Image.network(
-                    width: double.infinity,
-                    // height: double.infinity,
-                    "https://i.ibb.co/vwB46Yq/shoes.png",
-                    fit: BoxFit.contain,),
+                padding: EdgeInsets.all(14.0),
+                child: FancyShimmerImage(
+      imageUrl:  "https://i.ibb.co/vwB46Yq/shoes.png",
+      boxFit: BoxFit.fill,
+      height: screenSize.height * 0.2,
+      width: double.infinity,
+      errorWidget: const Icon(
+        IconlyBold.danger,
+        color: Colors.red,
+        size: 28.0,
+      ),
+    ),
               ),
               autoplay: true,
               pagination: const SwiperPagination(
@@ -82,21 +89,23 @@ class DetailProducts extends StatelessWidget {
             ),
           ),
           const SizedBox(
-          height: 8.0,
+            height: 8.0,
           ),
-          Text("Description",
-          style: TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.bold,
-          ),
+          Text(
+            "Description",
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(
-          height: 10.0,
+            height: 10.0,
           ),
-          Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-          style: TextStyle(
-          fontSize: 16.0,
-          ),
+          Text(
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            style: TextStyle(
+              fontSize: 16.0,
+            ),
           ),
         ],
       ),

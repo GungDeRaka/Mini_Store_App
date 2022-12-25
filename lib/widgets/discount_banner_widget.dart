@@ -1,5 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
+
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
+
 
 class DiscountBanner extends StatelessWidget {
   const DiscountBanner({
@@ -8,9 +13,10 @@ class DiscountBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.22,
+      height: size.height * 0.22,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(
           Radius.circular(12.0),
@@ -74,17 +80,28 @@ class DiscountBanner extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(
+          width: 20.0,
+          ),
           Flexible(
             flex: 3,
             child: Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Image.network(
-                width: double.infinity,
-                // height: double.infinity,
-                "https://i.ibb.co/vwB46Yq/shoes.png",
-                fit: BoxFit.contain,
-              ),
-            ),
+              padding: EdgeInsets.all(14.0),
+              child: FancyShimmerImage(
+      imageUrl:  "https://i.ibb.co/vwB46Yq/shoes.png",
+      boxFit: BoxFit.fill,
+      height: size.height * 0.2,
+      width: double.infinity,
+      errorWidget: const Icon(
+        IconlyBold.danger,
+        color: Colors.red,
+        size: 28.0,
+      ),
+    ),
+            )
+          ),
+          const SizedBox(
+          width: 20.0,
           ),
         ],
       ),

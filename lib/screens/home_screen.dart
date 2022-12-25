@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:store_api_flutter_course/models/products_model.dart';
 import '../screens/category_screen.dart';
 import '../screens/feeds_screen.dart';
 import '../screens/user_screen.dart';
 import '../widgets/product_feeds.dart';
 import '../widgets/discount_banner_widget.dart';
+import '../services/api_handler.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,8 +18,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController _searchController = TextEditingController();
+  List<ProductsModel> productList = [];
+
+  Future<void> getProduct() async {
+    productList = await APIHandler.getAllData();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    _searchController;
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    getProduct();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    APIHandler.getAllData();
     Size screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
@@ -64,6 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 16.0,
             ),
             TextFormField(
+              controller: _searchController,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Theme.of(context).cardColor,
@@ -123,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     context,
                     PageTransition(
                         type: PageTransitionType.fade,
-                        child: const FeedsScreen(),
+                        child: FeedsScreen(),
                         childCurrent: const HomeScreen()));
               },
               child: Row(
@@ -146,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             GridView.builder(
               shrinkWrap: true,
-              itemCount: 3,
+              itemCount: productList.length,
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -155,7 +185,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 childAspectRatio: 0.8,
               ),
               itemBuilder: (BuildContext context, int index) {
-                return const ProductFeeds();
+                return ProductFeeds(
+                  imageUrl: productList[index].images![0],
+                  title: productList[index].title.toString(),
+                );
               },
             ),
           ],

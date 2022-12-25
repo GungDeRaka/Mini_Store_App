@@ -29,20 +29,31 @@ class ProductsModel {
     images = json['images'].cast<String>();
     categoryId = json['categoryId'];
   }
-
-//! mthod toJson sbnrnya bisa dihilangin
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['id'] = id;
-    data['title'] = title;
-    data['price'] = price;
-    data['description'] = description;
-    if (category != null) {
-      data['category'] = category!.toJson();
-    }
-    data['images'] = images;
-    data['categoryId'] = categoryId;
-    return data;
+    static List<ProductsModel> productFromSnapshot(List productSnapshot) {
+    ///dalam kasus ini [tempList] merupakan [productSnapshot]
+    return productSnapshot.map((data) => ProductsModel.fromJson(data)).toList();
   }
 }
 
+
+///[some unused function]
+//! mthod toJson sbnrnya bisa dihilangin
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = {};
+  //   data['id'] = id;
+  //   data['title'] = title;
+  //   data['price'] = price;
+  //   data['description'] = description;
+  //   if (category != null) {
+  //     data['category'] = category!.toJson();
+  //   }
+  //   data['images'] = images;
+  //   data['categoryId'] = categoryId;
+  //   return data;
+  // }
+//?make func List<productmodel> ---(list){
+//}
+  // static List<ProductsModel> productFromSnapshot(List productSnapshot) {
+  //   ///dalam kasus ini [tempList] merupakan [productSnapshot]
+  //   return productSnapshot.map((data) => ProductsModel.fromJson(data)).toList();
+  // }

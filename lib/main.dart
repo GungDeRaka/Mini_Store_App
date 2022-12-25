@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'consts/global_colors.dart';
+import 'constants/global_colors.dart';
 import 'screens/home_screen.dart';
 
 void main() {
