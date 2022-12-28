@@ -15,7 +15,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
   List<ProductsModel> productList = [];
 
   Future<void> getProduct() async {
-    productList = await APIHandler.getAllData();
+    productList = await APIHandler.getProducts();
     setState(() {});
   }
 

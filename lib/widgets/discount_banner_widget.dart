@@ -86,6 +86,7 @@ class DiscountBanner extends StatelessWidget {
           Flexible(
             flex: 3,
             child: Padding(
+              // ignore: prefer_const_constructors
               padding: EdgeInsets.all(14.0),
               child: FancyShimmerImage(
       imageUrl:  "https://i.ibb.co/vwB46Yq/shoes.png",

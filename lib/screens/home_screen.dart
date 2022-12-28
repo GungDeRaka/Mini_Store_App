@@ -19,13 +19,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController _searchController = TextEditingController();
-  List<ProductsModel> productList = [];
+  final TextEditingController _searchController = TextEditingController();
+  // List<ProductsModel> productList = [];
 
-  Future<void> getProduct() async {
-    productList = await APIHandler.getAllData();
-    setState(() {});
-  }
+  // Future<void> getProduct() async {
+  //   productList = await APIHandler.getProducts();
+  //   setState(() {});
+  // }
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void didChangeDependencies() {
-    getProduct();
+    APIHandler.getProducts();
     super.didChangeDependencies();
   }
 
@@ -47,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     Size screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
@@ -154,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     context,
                     PageTransition(
                         type: PageTransitionType.fade,
-                        child: FeedsScreen(),
+                        child: const FeedsScreen(),
                         childCurrent: const HomeScreen()));
               },
               child: Row(
@@ -176,29 +175,41 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 20.0,
             ),
             FutureBuilder<List<ProductsModel>>(
-                future: APIHandler.getAllData(),
+                initialData: const [],
+                future: APIHandler.getProducts(),
                 builder: (context, snapshot) {
-                  return (snapshot.connectionState == ConnectionState.waiting)
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : GridView.builder(
-                        itemCount: productList.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 0.0,
-                            mainAxisSpacing: 0.0,
-                            childAspectRatio: 0.8,
-                          ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return ChangeNotifierProvider.value(
-                              value: productList[index],
-                              child: const ProductFeeds());
-                          },
-                        );
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    Center(
+                      child: Text("An error occured ${snapshot.error}"),
+                    );
+                  } else if (snapshot.data == null) {
+                    const Center(
+                      child: Text("No products has been added yet"),
+                    );
+                  }
+                  return GridView.builder(
+                    itemCount: snapshot.data!.length,
+                    
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 0.0,
+                      mainAxisSpacing: 0.0,
+                      childAspectRatio: 0.8,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return ChangeNotifierProvider<ProductsModel>.value(
+                        value: snapshot.data![index],
+                        child: const ProductFeeds(),
+                      );
+                    },
+                  );
                 }),
           ],
         ),

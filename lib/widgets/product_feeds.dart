@@ -4,21 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import 'package:store_api_flutter_course/models/products_model.dart';
-
-import 'package:store_api_flutter_course/screens/detail_products.dart';
-
+import '../models/products_model.dart';
+import '../screens/detail_products.dart';
+import '../widgets/favourite_widget.dart';
 import '../constants/global_colors.dart';
 
 class ProductFeeds extends StatelessWidget {
-  
   const ProductFeeds({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ProductsModel modelProvider = Provider.of<ProductsModel>(context);
+    final modelProvider = Provider.of<ProductsModel>(context);
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(4.0),
@@ -34,78 +32,85 @@ class ProductFeeds extends StatelessWidget {
                 PageTransition(
                     type: PageTransitionType.size,
                     alignment: Alignment.bottomCenter,
-                    child: const DetailProducts()));
+                    child: DetailProducts(
+                      id: modelProvider.id.toString(),
+                    )));
           },
           borderRadius: const BorderRadius.all(
             Radius.circular(12.0),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: RichText(
-                        text: TextSpan(children: [
-                          const TextSpan(
-                            text: "\$",
-                            style: TextStyle(
-                              color: Color.fromRGBO(33, 150, 243, 1),
-                            ),
-                          ),
-                          TextSpan(
-                              text: "${modelProvider.price}",
+          child: SizedBox(
+            height: size.height * 0.45,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
+                              text: "\$",
                               style: TextStyle(
-                                  color: lightTextColor,
-                                  fontWeight: FontWeight.w600)),
-                        ]),
+                                color: Color.fromRGBO(33, 150, 243, 1),
+                              ),
+                            ),
+                            TextSpan(
+                                text: "${modelProvider.price}",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: lightTextColor,
+                                    fontWeight: FontWeight.w600)),
+                          ]),
+                        ),
+                      ),
+                      const FavouriteWidget(),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(12.0),
+                    ),
+                    child: FancyShimmerImage(
+                      imageUrl: modelProvider.images![0],
+                      boxFit: BoxFit.fill,
+                      height: size.height * 0.2,
+                      width: double.infinity,
+                      errorWidget: const Icon(
+                        IconlyBold.danger,
+                        color: Colors.red,
+                        size: 28.0,
                       ),
                     ),
-                    const Icon(IconlyBold.heart)
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(12.0),
                   ),
-                  child: FancyShimmerImage(
-                    imageUrl: modelProvider.images![1],
-                    boxFit: BoxFit.fill,
-                    height: size.height * 0.2,
-                    width: double.infinity,
-                    errorWidget: const Icon(
-                      IconlyBold.danger,
-                      color: Colors.red,
-                      size: 28.0,
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: SizedBox(
+                    // width: size.width *0.25,
+                    child: Text(
+                      modelProvider.title.toString(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style:
+                          const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w700),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  modelProvider.title.toString(),
-                  overflow: TextOverflow.fade,
-                  maxLines: 2,
-                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w700),
-                ),
-              ),
-              // SizedBox(
-              //   height: size.height * 0.02,
-              // )
-            ],
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // )
+              ],
+            ),
           ),
         ),
       ),

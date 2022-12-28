@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '../models/categories_model.dart';
 
-class ProductsModel with ChangeNotifier{
+class ProductsModel with ChangeNotifier {
   int? id;
   String? title;
   int? price;
@@ -31,7 +31,7 @@ class ProductsModel with ChangeNotifier{
     images = json['images'].cast<String>();
     categoryId = json['categoryId'];
   }
-    static List<ProductsModel> productFromSnapshot(List productSnapshot) {
+  static List<ProductsModel> productFromSnapshot(List productSnapshot) {
     ///dalam kasus ini [tempList] merupakan [productSnapshot]
     return productSnapshot.map((data) => ProductsModel.fromJson(data)).toList();
   }
