@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void didChangeDependencies() {
-    APIHandler.getProducts();
+    APIHandler.getProducts(limit: "3");
     super.didChangeDependencies();
   }
 
@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             FutureBuilder<List<ProductsModel>>(
                 initialData: const [],
-                future: APIHandler.getProducts(),
+                future: APIHandler.getProducts(limit: "3"),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(

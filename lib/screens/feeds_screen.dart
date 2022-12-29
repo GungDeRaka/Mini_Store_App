@@ -12,23 +12,49 @@ class FeedsScreen extends StatefulWidget {
 }
 
 class _FeedsScreenState extends State<FeedsScreen> {
+  final ScrollController _scrollController = ScrollController();
   List<ProductsModel> productList = [];
-
+  int limit =10;
+  bool _isLoading = false;
+  // bool _isLimit= false;
   Future<void> getProduct() async {
-    productList = await APIHandler.getProducts();
+    productList = await APIHandler.getProducts(limit: limit.toString());
     setState(() {});
   }
 
   @override
   void initState() {
-  
+    getProduct();
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    getProduct();
+    
+    _scrollController.addListener(() async {
+      // if(limit==10){
+      //   _isLimit = true;
+      //   setState(() {
+          
+      //   });
+      // }
+
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _isLoading = true;
+        limit += 10;
+        await getProduct();
+        print(limit);
+        _isLoading = false;
+      }
+    });
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -43,20 +69,29 @@ class _FeedsScreenState extends State<FeedsScreen> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : GridView.builder(
-              itemCount: productList.length,
-              // shrinkWrap: true,
-              // physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 0.0,
-                mainAxisSpacing: 0.0,
-                childAspectRatio: 0.8,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return ChangeNotifierProvider.value(
-                    value: productList[index], child: const ProductFeeds());
-              },
+          : ListView(
+              controller: _scrollController,
+              children: [
+                GridView.builder(
+                  itemCount: productList.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 0.0,
+                    mainAxisSpacing: 0.0,
+                    childAspectRatio: 0.8,
+                  ),
+                  itemBuilder: (BuildContext context, int index) {
+                    return ChangeNotifierProvider.value(
+                        value: productList[index], child: const ProductFeeds());
+                  },
+                ),
+                if (limit == 10)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  )
+              ],
             ),
     );
   }
